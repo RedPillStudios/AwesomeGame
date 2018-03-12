@@ -11,11 +11,18 @@ const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 const int NUMBERS_SHEET = 10;
 const int ANIM_FRAMES = 5;
+const int EXPLOSION_FRAMES = 8;
 SDL_Event e;
 
-
+SDL_Rect Foreground;
+SDL_Rect Foreground2;
 SDL_Rect Background;
 SDL_Rect Background2;
+SDL_Rect LastBackground;
+SDL_Rect LastBackground2;
+SDL_Rect Start;
+SDL_Rect Press;
+SDL_Rect AwesomeGame;
 SDL_Rect Ship;
 SDL_Rect Shoot;
 SDL_Rect Enemy;
@@ -38,9 +45,20 @@ SDL_Rect No;
 SDL_Rect Selector;
 SDL_Rect Impulsor;
 SDL_Rect Impulsor_Clipping[ANIM_FRAMES];
-
+SDL_Rect Explosion;
+SDL_Rect Explosion_Clipping[EXPLOSION_FRAMES];
 
 void Set_Initial_States() {
+
+	Explosion.x=OUTSCREEN;
+	Explosion.y = OUTSCREEN;
+	Explosion.w = 100;
+	Explosion.h = 100;
+
+	Explosion_Clipping[0].x = 0;
+	Explosion_Clipping[0].y = 0;
+	Explosion_Clipping[0].w = 113;
+	Explosion_Clipping[0].h = 114;
 
 	Impulsor.x=NULL;
 	Impulsor.y = NULL;
@@ -74,14 +92,35 @@ void Set_Initial_States() {
 
 
 	Background.x = 0;
-	Background.y = 0;
+	Background.y = -100;
 	Background.w = SCREEN_WIDTH;
 	Background.h = SCREEN_HEIGHT;
 
 	Background2.x = SCREEN_WIDTH;
-	Background2.y = 0;
+	Background2.y = -100;
 	Background2.w = SCREEN_WIDTH;
 	Background2.h = SCREEN_HEIGHT;
+
+	Foreground.x = 0;
+	Foreground.y = 0;
+	Foreground.w = SCREEN_WIDTH;
+	Foreground.h = SCREEN_HEIGHT;
+
+	Foreground2.x = SCREEN_WIDTH;
+	Foreground2.y = 0;
+	Foreground2.w = SCREEN_WIDTH;
+	Foreground2.h = SCREEN_HEIGHT;
+
+	LastBackground.x = 0;
+	LastBackground.y = 0;
+	LastBackground.w = SCREEN_WIDTH;
+	LastBackground.h = SCREEN_HEIGHT;
+
+	LastBackground2.x = SCREEN_WIDTH;
+	LastBackground2.y = 0;
+	LastBackground2.w = SCREEN_WIDTH;
+	LastBackground2.h = SCREEN_HEIGHT;
+
 
 	NumClipper[0].x = 0;
 	NumClipper[0].y = 0;
@@ -163,6 +202,22 @@ void Set_Initial_States() {
 	Enemy4Shoot.y = OUTSCREEN;
 	Enemy4Shoot.w = PLSHOOT;
 	Enemy4Shoot.h = PLSHOOT;
+
+
+	AwesomeGame.x = 10;
+	AwesomeGame.y = NULL;
+	AwesomeGame.w = 600;
+	AwesomeGame.h = 250;
+
+	Press.x = 170;
+	Press.y = 250;
+	Press.w = 300;
+	Press.h = 40;
+
+	Start.x = 140;
+	Start.y = 300;
+	Start.w = 350;
+	Start.h = 80;
 
 	GameOver.x = 30;
 	GameOver.y = NULL;
