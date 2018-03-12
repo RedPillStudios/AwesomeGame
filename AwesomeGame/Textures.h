@@ -25,6 +25,14 @@ SDL_Texture* Impulsor_Texture = nullptr;
 SDL_Texture* Background_Dead = nullptr;
 SDL_Texture* Explosion_Texture = nullptr;
 
+//Load Music & SFX
+Mix_Music *Music = nullptr;
+Mix_Chunk *Laser = nullptr;
+Mix_Chunk *EnemyLaser = nullptr;
+Mix_Chunk *Collision = nullptr;
+Mix_Chunk *ButtonNo = nullptr;
+Mix_Chunk *ButtonYes = nullptr;
+
 SDL_Texture* loadTexture(const char* filename) {
 
 	//Final Texture
@@ -61,8 +69,18 @@ bool loadMedia() {
 	No_Texture = loadTexture("Text/NO.png");
 	Selector_texture = loadTexture("Text/Selector.png");
 	Impulsor_Texture = loadTexture("Images/Impuls.png");
+
 	Background_Dead = loadTexture("Images/Background_GameOver.png");
 	Explosion_Texture = loadTexture("Images/Explosion.png");
+
+	//Path to Music & SFX
+	Music = Mix_LoadMUS("Audio/Mus1.ogg");
+	Laser = Mix_LoadWAV("Audio/Laser_Gun.wav");
+	EnemyLaser = Mix_LoadWAV("Audio/Enemy_Laser.wav");
+	Collision = Mix_LoadWAV("Audio/Collision.wav");
+	ButtonNo = Mix_LoadWAV("Audio/No.wav");
+	ButtonYes = Mix_LoadWAV("Audio/Yes.wav");
+
 	if (Background_Texture == NULL || Player_shipTexture == NULL || Enemy_shipTexture == NULL || Shoot_Texture == NULL || Score_Texture == NULL || Numbers_Texture == NULL) {
 		succes = false;
 	}

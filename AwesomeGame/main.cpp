@@ -11,6 +11,14 @@
 #pragma comment(lib,"SDL_image/libx86/SDL2_image.lib")
 #pragma comment(lib,"SDL_Mixer/libx86/SDL2_mixer.lib")
 
+/*Mix_PlayChannel(-1, Laser, 0);
+Mix_PlayChannel(-1, EnemyLaser, 0);
+Mix_PlayChannel(-1, EnemyLaser, 0);
+Mix_PlayChannel(-1, EnemyLaser, 0);
+Mix_PlayChannel(-1, Collision, 0);
+Mix_PlayChannel(-1, ButtonNo, 0);
+Mix_PlayChannel(-1, ButtonYes, 0);*/
+
 
 
 int main(int argc, char* argv[]) {
@@ -138,11 +146,20 @@ int main(int argc, char* argv[]) {
 					}
 				}
 			}
+
 			if (Enter&&MainMenu) {
 				MainMenu = false;
 				Set_Initial_States();
 				Alive = true;
 			}
+    
+  /*	if (Mix_PlayingMusic() == 0){
+
+				Mix_FadeInMusic(Music, 0, 1000);
+				Mix_PlayMusic(Music, -1);
+				Mix_VolumeMusic(64);
+			}*/
+  
 			if (Alive) {
 				Impulsor.x = Ship.x-135;
 				Impulsor.y = Ship.y;
@@ -384,6 +401,7 @@ int main(int argc, char* argv[]) {
 			SDL_Delay(30);
 
 	}	
+	Mix_HaltMusic();
 	close();
 
 	return 0;
