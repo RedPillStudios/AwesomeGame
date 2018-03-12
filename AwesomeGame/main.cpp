@@ -11,13 +11,6 @@
 #pragma comment(lib,"SDL_image/libx86/SDL2_image.lib")
 #pragma comment(lib,"SDL_Mixer/libx86/SDL2_mixer.lib")
 
-/*Mix_PlayChannel(-1, Laser, 0);
-Mix_PlayChannel(-1, EnemyLaser, 0);
-Mix_PlayChannel(-1, EnemyLaser, 0);
-Mix_PlayChannel(-1, EnemyLaser, 0);
-Mix_PlayChannel(-1, Collision, 0);
-Mix_PlayChannel(-1, ButtonNo, 0);
-Mix_PlayChannel(-1, ButtonYes, 0);*/
 
 
 
@@ -153,12 +146,12 @@ int main(int argc, char* argv[]) {
 				Alive = true;
 			}
     
-  /*	if (Mix_PlayingMusic() == 0){
+	if (Mix_PlayingMusic() == 0){
 
 				Mix_FadeInMusic(Music, 0, 1000);
 				Mix_PlayMusic(Music, -1);
 				Mix_VolumeMusic(64);
-			}*/
+			}
   
 			if (Alive) {
 				Impulsor.x = Ship.x-135;
@@ -177,12 +170,14 @@ int main(int argc, char* argv[]) {
 						Ship.y += Velocity;
 					}
 					if (Space && !Shooting) {
+						Mix_PlayChannel(-1, Laser, 0);
 						Shoot.x = Ship.x + Ship.w - 50;
 						Shoot.y = Ship.y + (Ship.h / 2) - 40;
 						Shooting = true;
 						Shoot_Enabled = true;
 					}
 					if (SDL_HasIntersection(&Enemy2Shoot, &Ship) || SDL_HasIntersection(&Enemy3Shoot, &Ship) || SDL_HasIntersection(&Enemy4Shoot, &Ship) || SDL_HasIntersection(&Enemy, &Ship)) {
+						Mix_PlayChannel(-1, Collision, 0);
 						Alive = false;
 					}
 				}
@@ -255,6 +250,7 @@ int main(int argc, char* argv[]) {
 						Enemy2Shooting = true;
 					}
 					if (Enemy2Shooting&&Enemy2reachedpoint) {
+						//Mix_PlayChannel(-1, EnemyLaser, 0);
 						Enemy2Shoot.x -= VelocityShootEnemy;
 						if (Enemy2Shoot.x <= 0) {
 							Enemy2Shooting = false;
@@ -267,6 +263,7 @@ int main(int argc, char* argv[]) {
 
 				if (Enemy3Alive) {
 					if (Enemy3.x >= 500) {
+						//Mix_PlayChannel(-1, EnemyLaser, 0);
 						Enemy3.x -= Velocity;
 						Enemy3Shoot.x = -100;
 						Enemy3reachedpoint = false;
@@ -305,6 +302,7 @@ int main(int argc, char* argv[]) {
 						Enemy4Shooting = true;
 					}
 					if (Enemy4Shooting&&Enemy4reachedpoint) {
+						//Mix_PlayChannel(-1, EnemyLaser, 0);
 						Enemy4Shoot.x -= VelocityShootEnemy;
 						if (Enemy4Shoot.x <= 0) {
 							Enemy4Shooting = false;
@@ -379,6 +377,8 @@ int main(int argc, char* argv[]) {
 				
 				}
 				if (Selector.x == Yes.x - 30&&Enter) {
+
+					Mix_PlayChannel(-1, ButtonYes, 0);
 					Set_Initial_States();
 					PosSprite = 0;
 					SpriteColumn1 = 0;
@@ -390,6 +390,10 @@ int main(int argc, char* argv[]) {
 				
 				}
 				else if (Selector.x == No.x - 35 && Enter) { 
+
+					Mix_PlayChannel(-1, ButtonNo, 0);
+					Mix_FadeOutMusic(1000);
+					Mix_HaltMusic();
 					quit = true;	
 				}
 			}
@@ -399,11 +403,9 @@ int main(int argc, char* argv[]) {
 			Draw(SpriteColumn1, SpriteColumn2, SpriteColumn3, PosSprite,MenuOut,frames,framesExplosion,MainMenu);
 
 			SDL_Delay(30);
-
 	}	
-	Mix_HaltMusic();
+	;
 	close();
-
 	return 0;
 }
 
