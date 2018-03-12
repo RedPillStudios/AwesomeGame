@@ -7,11 +7,12 @@ bool init() {
 	bool succes = true;
 
 	//initialize SDL
-	SDL_Init(SDL_INIT_VIDEO);
-
+	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+	Mix_Init(MIX_INIT_OGG);
 	//Create Window(this only creates the "marco" of the windows, here we cannot draw anything)
 	window = SDL_CreateWindow("AWESOME GAME", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+	if (SDL_Init(SDL_INIT_VIDEO || SDL_INIT_AUDIO) < 0) {
 		succes = false;
 	}
 	else {
@@ -66,7 +67,11 @@ void close() {
 	SDL_DestroyRenderer(Main_Renderer);
 	window = nullptr;
 	Main_Renderer = nullptr;
+	Mix_FreeMusic(Music);
+	Music = nullptr;
+	Mix_CloseAudio();
 	//Quit from SDL subsystems
+	Mix_Quit();
 	IMG_Quit();
 	SDL_Quit();
 }
