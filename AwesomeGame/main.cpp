@@ -141,16 +141,17 @@ int main(int argc, char* argv[]) {
 			}
 
 			if (Enter&&MainMenu) {
+				Mix_PlayChannel(-1, ButtonNo, 0);
 				MainMenu = false;
 				Set_Initial_States();
 				Alive = true;
 			}
-    
+
 	if (Mix_PlayingMusic() == 0){
 
 				Mix_FadeInMusic(Music, 0, 1000);
 				Mix_PlayMusic(Music, -1);
-				Mix_VolumeMusic(64);
+				Mix_VolumeMusic(54);
 			}
   
 			if (Alive) {
@@ -369,14 +370,17 @@ int main(int argc, char* argv[]) {
 			}
 			else {
 				MenuOut = true;
+				Mix_HaltMusic();
 				if (Left) {
 					Selector.x = Yes.x - 30;
+					Mix_PlayChannel(-1, ButtonNo, 0);
 				}
 				else if (Right) {
 					Selector.x = No.x - 35;
-				
+					Mix_PlayChannel(-1, ButtonNo, 0);
 				}
 				if (Selector.x == Yes.x - 30&&Enter) {
+
 
 					Mix_PlayChannel(-1, ButtonYes, 0);
 					Set_Initial_States();
@@ -384,6 +388,7 @@ int main(int argc, char* argv[]) {
 					SpriteColumn1 = 0;
 					SpriteColumn2 = 0;
 					SpriteColumn3 = 0;
+					Mix_HaltMusic();
 					Alive = true;
 					MenuOut = false;
 					
@@ -391,7 +396,7 @@ int main(int argc, char* argv[]) {
 				}
 				else if (Selector.x == No.x - 35 && Enter) { 
 
-					Mix_PlayChannel(-1, ButtonNo, 0);
+					Mix_PlayChannel(-1, ButtonYes, 0);
 					Mix_FadeOutMusic(1000);
 					Mix_HaltMusic();
 					quit = true;	
