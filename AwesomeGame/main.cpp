@@ -12,8 +12,6 @@
 #pragma comment(lib,"SDL_Mixer/libx86/SDL2_mixer.lib")
 
 
-
-
 int main(int argc, char* argv[]) {
 
 	srand(9);
