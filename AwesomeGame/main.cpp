@@ -11,7 +11,6 @@
 #pragma comment(lib,"SDL_image/libx86/SDL2_image.lib")
 #pragma comment(lib,"SDL_Mixer/libx86/SDL2_mixer.lib")
 
-
 int main(int argc, char* argv[]) {
 
 	srand(9);
@@ -20,8 +19,9 @@ int main(int argc, char* argv[]) {
 	int framesExplosion=0;
 	int frames = 0;
 	int Velocity = 10;
+	int VelocityEnemy = 15;
 	int VelocityShoot = 50;
-	int VelocityShootEnemy = 20;
+	int VelocityShootEnemy = 25;
 	int PosSprite=0;
 	int SpriteColumn1=0;
 	int SpriteColumn2=0;
@@ -137,7 +137,7 @@ int main(int argc, char* argv[]) {
 					}
 				}
 			}
-
+			
 			if (Enter&&MainMenu) {
 				Mix_PlayChannel(-1, ButtonNo, 0);
 				MainMenu = false;
@@ -313,7 +313,7 @@ int main(int argc, char* argv[]) {
 				}
 
 				if (EnemyAlive) {
-					Enemy.x -= Velocity;
+					Enemy.x -= VelocityEnemy;
 					if (Enemy.x < 0 - Enemy.w) {
 						Enemy.x = SCREEN_WIDTH;
 						Enemy.y = rand() % (SCREEN_HEIGHT - 100);
