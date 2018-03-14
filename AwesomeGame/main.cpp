@@ -1,3 +1,6 @@
+#include "UpdateStatus.h"
+#include "App.h"
+#include "MemLeaks.h"
 
 #include "SDL\include\SDL.h"
 #include <iostream>
@@ -10,6 +13,88 @@
 #pragma comment(lib,"SDL/libx86/SDL2main.lib")
 #pragma comment(lib,"SDL_image/libx86/SDL2_image.lib")
 #pragma comment(lib,"SDL_Mixer/libx86/SDL2_mixer.lib")
+
+
+enum main_states {
+
+	MAIN_CREATION,
+	MAIN_START,
+	MAIN_UPDATE,
+	MAIN_FINISH,
+	MAIN_EXIT
+};
+
+
+
+int test() {
+
+	ReportMemoryLeaks();
+
+	int main_return = EXIT_FAILURE;
+	main_states state = MAIN_CREATION;
+	Application *App = nullptr;
+
+	while (state != MAIN_EXIT) {
+
+		switch (state) {
+
+		case MAIN_CREATION: {
+
+			LOG("\nAPP CREATION");
+			App = new Application();
+			state = MAIN_START;
+
+		} break;
+
+		case MAIN_START: {
+
+			LOG("\nAPP START");
+
+			if (App->Init() == false) {
+
+				LOG("\nAPP INIT EXITS ERROR");
+				state = MAIN_EXIT;
+			}
+
+			else { state = MAIN_UPDATE; }
+
+		} break;
+
+		case MAIN_UPDATE: {
+
+			update_status status = App->Update();
+
+			if (status == update_status::UPDATE_ERROR) {
+
+				LOG("\APP UPDATE ERROR");
+				state = MAIN_EXIT;
+			}
+
+			else if (status == update_status::UPDATE_STOP) {
+				
+				state = MAIN_FINISH;
+			}
+
+		} break;
+
+		case MAIN_FINISH: {
+
+			LOG("APP CLEANUP");
+
+			if (App->CleanUp() == false) {
+
+				LOG("APP CLEANUP ERROR");
+			}
+			else { main_return = EXIT_SUCCESS; }
+			state = MAIN_EXIT;
+			break;
+		}
+		}
+	}
+
+	return main_return;
+}
+
 
 int main(int argc, char* argv[]) {
 
